@@ -6,11 +6,12 @@ bot = telebot.TeleBot(TOKEN)
 
 @bot.message_handler(commands=['start', 'help'])
 def help(message: telebot.types.Message):
-    text = 'Категорически приветсвую! ' \
+    text = 'Категорически Вас приветсвую! ' \
            '\nДля того, чтоб узнать, что там с курсом, введите следующие данные: ' \
            '\n\n1.Имя валюты, цену которой хотите узнать ' \
            '\n2.Имя валюты, в которой надо узнать цену первой валюты ' \
            '\n3.Количество первой валюты ' \
+           '\n\nПРИМЕР ВВОДА: Доллар Рубль 250' \
            '\n\nCписок всех доступных валют - /values'
     bot.reply_to(message, text)
 
@@ -29,7 +30,7 @@ def values(message: telebot.types.Message):
 @bot.message_handler(content_types=['text'])
 def get_price(message: telebot.types.Message):
     try:
-        values = message.text.split(' ')
+        values = message.text.lower().split()
 
         if len(values) > 3:
             raise ConvertionException('Слишком много параметров')
